@@ -1,4 +1,4 @@
 import { authController } from "@/lib/controllers/auth/auth.controller";
 
-// POST /api/auth/register
-export const POST = authController.registration
+// POST /api/v1/auth/send-otp
+export const POST = authController.sendOtp
