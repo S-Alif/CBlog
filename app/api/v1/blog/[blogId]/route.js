@@ -8,4 +8,3 @@ export const DELETE = blogController.removeBlog
 // for public
 export const GET = blogController.getBlogById
 export const PUT = blogController.incrementViewCount
-export const POST = blogController.searchBlogs
