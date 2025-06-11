@@ -1,6 +1,6 @@
 "use client"
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import {ChevronDown, Menu, X} from "lucide-react";
 import {
     motion,
     AnimatePresence,
@@ -10,6 +10,8 @@ import {
 
 import React, { useRef, useState } from "react";
 import Link from "next/link";
+import DisplayDropdown from "@/components/DisplayDropdown";
+import {DropdownMenuItem} from "@/components/ui/dropdown-menu";
 
 
 export const Navbar = ({
@@ -91,21 +93,56 @@ export const NavItems = ({
                 "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
                 className
             )}>
-            {items.map((item, idx) => (
-                <Link
-                    onMouseEnter={() => setHovered(idx)}
-                    onClick={onItemClick}
-                    className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
-                    key={`link-${idx}`}
-                    href={item.link}>
-                    {hovered === idx && (
-                        <motion.div
-                            layoutId="hovered"
-                            className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800" />
-                    )}
-                    <span className="relative z-20">{item.name}</span>
-                </Link>
-            ))}
+            {items.map((item, idx) => {
+                return item?.link ? (
+                    <Link
+                        onMouseEnter={() => setHovered(idx)}
+                        onClick={onItemClick}
+                        className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+                        key={`link-${idx}`}
+                        href={item.link}
+                    >
+                        {hovered === idx && (
+                            <motion.div
+                                layoutId="hovered"
+                                className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800" />
+                        )}
+                        <span className="relative z-20">{item.name}</span>
+                    </Link>
+                ) :
+                    (
+                        <DisplayDropdown
+                            key={idx}
+                            trigger={
+                                <button
+                                    type="button"
+                                    onMouseEnter={() => setHovered(idx)}
+                                    className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+                                >
+                                    {hovered === idx && (
+                                        <motion.div
+                                            layoutId="hovered"
+                                            className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800" />
+                                    )}
+                                    <span className="relative z-20 flex gap-1">{item.name} <ChevronDown size={17}/></span>
+                                </button>
+                            }
+                        >
+                            {
+                                item.dropdowns.map((dropdowns, drIdx) => (
+                                    <DropdownMenuItem key={`dropdown-${drIdx}`}>
+                                        <Link
+                                            href={`blog-by-category?category=${dropdowns?._id}&page=1`}
+                                            className="relative text-neutral-600 dark:text-neutral-300"
+                                        >
+                                            <span className="block z-20">{dropdowns?.name}</span>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                ))
+                            }
+                        </DisplayDropdown>
+                    )
+            })}
         </motion.div>
     );
 };

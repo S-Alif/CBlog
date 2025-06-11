@@ -11,7 +11,7 @@
 import axios from 'axios'
 
 
-const apiHandler = async (url, method, data = {}, showToast = false) => {
+const apiHandler = async (url, method = "GET", data = {}, showToast = false) => {
     const options = {
         url,
         method,
