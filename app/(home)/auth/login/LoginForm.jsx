@@ -33,7 +33,7 @@ export default function LoginForm() {
     // form field list
     const formFields = [
         <InputField
-            type={"text"}
+            type={"email"}
             form={form}
             label={"Email address"}
             name={"email"}
