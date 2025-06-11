@@ -8,7 +8,9 @@ export default function Home() {
 	const {getInitialData} = infoStore()
 
 	useEffect(() => {
-		(async () => {await getInitialData()})()
+		if(typeof window !== "undefined") {
+			(async () => {await getInitialData()})()
+		}
 	}, [])
 
 	return (

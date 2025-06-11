@@ -1,7 +1,8 @@
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
 import DisplayMagicCard from "@/components/DisplayMagicCard";
 import LoginForm from "@/app/(home)/auth/login/LoginForm";
+import Link from "next/link";
+import {buttonVariants} from "@/components/ui/button";
 
 // page metadata
 export const metadata = {
@@ -25,8 +26,16 @@ export default function LoginPage () {
                     <CardContent className="p-4">
                         <LoginForm />
                     </CardContent>
-                    <CardFooter className="p-4 border-t border-border [.border-t]:pt-4">
-                        <Button className="w-full">Sign In</Button>
+                    <CardFooter className="p-4 border-t border-border [.border-t]:pt-4 flex items-center justify-center">
+                        <Link
+                            href={"/auth/send-otp"}
+                            className={buttonVariants({
+                                size: "lg",
+                                variant: "link"
+                            })}
+                        >
+                            Forgot Password
+                        </Link>
                     </CardFooter>
                 </DisplayMagicCard>
             </Card>

@@ -15,7 +15,7 @@ import Link from "next/link";
 import infoStore from "@/stores/infoStore";
 import DisplayDropdown from "@/components/DisplayDropdown";
 import {DropdownMenuItem} from "@/components/ui/dropdown-menu";
-import {ChevronDown} from "lucide-react";
+import {ChevronDown, LogIn, UserRoundCheck} from "lucide-react";
 
 export function PublicNavbar() {
 
@@ -45,9 +45,12 @@ export function PublicNavbar() {
                 <NavBody>
                     <NavbarLogo />
                     <NavItems items={navItems} />
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1">
                         <NavbarButton variant="secondary" href={"/auth/login"}>
                             Login
+                        </NavbarButton>
+                        <NavbarButton variant="secondary" href={"/auth/register"}>
+                            Register
                         </NavbarButton>
                     </div>
                 </NavBody>
@@ -57,6 +60,7 @@ export function PublicNavbar() {
                     <MobileNavHeader>
                         <NavbarLogo />
                         <MobileNavToggle
+                            className={"cursor-pointer"}
                             isOpen={isMobileMenuOpen}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
                     </MobileNavHeader>
@@ -79,7 +83,7 @@ export function PublicNavbar() {
                                     key={idx}
                                     trigger={
                                         <button type="button">
-                                            <span className="flex gap-1 items-center">{item.name} <ChevronDown size={22}/></span>
+                                            <span className="flex gap-1 items-center cursor-pointer">{item.name} <ChevronDown size={22}/></span>
                                         </button>
                                     }
                                 >
@@ -87,8 +91,8 @@ export function PublicNavbar() {
                                         item.dropdowns.map((category, drIdx) => (
                                             <DropdownMenuItem>
                                                 <Link
-                                                    key={drIdx+idx}
-                                                    href={`blog-by-category?category=${category._id}&page=1`}
+                                                    key={drIdx}
+                                                    href={`/blog-by-category?category=${category._id}&page=1`}
                                                     onClick={() => setIsMobileMenuOpen(false)}
                                                     className="relative text-neutral-600 dark:text-neutral-300"
                                                 >
@@ -100,12 +104,21 @@ export function PublicNavbar() {
                                 </DisplayDropdown>
                             )
                         })}
-                        <div className="flex w-full flex-col gap-4">
+                        <div className="flex w-full gap-4">
                             <NavbarButton
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 variant="primary"
-                                className="w-full">
-                                Login
+                                href={"/auth/login"}
+                            >
+                                <LogIn />
+                            </NavbarButton>
+                            
+                            <NavbarButton
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                variant="primary"
+                                href={"/auth/register"}
+                            >
+                                <UserRoundCheck />
                             </NavbarButton>
                         </div>
                     </MobileNavMenu>
