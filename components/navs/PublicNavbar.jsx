@@ -39,14 +39,16 @@ export function PublicNavbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <div className="relative w-full">
+        <div className="fixed w-full">
             <Navbar>
                 {/* Desktop Navigation */}
                 <NavBody>
                     <NavbarLogo />
                     <NavItems items={navItems} />
                     <div className="flex items-center gap-4">
-                        <NavbarButton variant="secondary">Login</NavbarButton>
+                        <NavbarButton variant="secondary" href={"/auth/login"}>
+                            Login
+                        </NavbarButton>
                     </div>
                 </NavBody>
 

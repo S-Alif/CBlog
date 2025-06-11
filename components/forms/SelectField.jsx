@@ -31,6 +31,7 @@
  * </SelectField>
  */
 
+"use client"
 
 import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Select, SelectContent, SelectValue, SelectTrigger} from "@/components/ui/select";

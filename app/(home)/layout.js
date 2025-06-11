@@ -1,6 +1,7 @@
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "../globals.css";
 import { PublicNavbar } from "@/components/navs/PublicNavbar";
+import {ThemeProvider} from "next-themes";
 
 const roboto = Roboto({
     subsets: ["latin"],
@@ -26,8 +27,15 @@ export default function RootLayout({ children }) {
             <body
                 className={`${roboto.variable} ${robotoMono.variable} antialiased`}
             >
-                <PublicNavbar />
-                {children}
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <PublicNavbar />
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
