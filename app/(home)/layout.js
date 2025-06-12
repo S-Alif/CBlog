@@ -2,6 +2,7 @@ import { Roboto, Roboto_Mono } from "next/font/google";
 import "../globals.css";
 import { PublicNavbar } from "@/components/navs/PublicNavbar";
 import {ThemeProvider} from "next-themes";
+import {Toaster} from "@/components/ui/sonner";
 
 const roboto = Roboto({
     subsets: ["latin"],
@@ -36,6 +37,11 @@ export default function RootLayout({ children }) {
                     <PublicNavbar />
                     {children}
                 </ThemeProvider>
+                <Toaster
+                    visibleToasts={5}
+                    position="top-center"
+                    richColors
+                />
             </body>
         </html>
     );

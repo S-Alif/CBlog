@@ -8,7 +8,10 @@
  *
  * @returns {Promise} A promise that resolves with the response of the API request.
  */
+
+
 import axios from 'axios'
+import {errorToast, successToast} from "@/helpers/toasts/toastNofifications";
 
 
 const apiHandler = async (url, method = "GET", data = {}, showToast = false) => {
@@ -24,6 +27,7 @@ const apiHandler = async (url, method = "GET", data = {}, showToast = false) => 
 
         if (showToast) {
             // show the toast notification
+            successToast(response.message)
         }
 
         return response?.data
@@ -34,9 +38,11 @@ const apiHandler = async (url, method = "GET", data = {}, showToast = false) => 
         const message = error?.response?.data?.message
         if (message) {
             // show the toast notification with the error message
+            errorToast(message)
         }
         else {
             // show a generic error message
+            errorToast("Something went wrong")
         }
         return false
     }

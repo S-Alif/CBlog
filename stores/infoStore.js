@@ -1,7 +1,6 @@
 import {create} from "zustand";
 import apiHandler from "@/helpers/api/apiHandler";
 import {routes, GET} from "@/helpers/api/apiConstants";
-import {SidebarInset} from "@/components/ui/sidebar";
 
 const infoStore = create((set) => ({
     category: [],

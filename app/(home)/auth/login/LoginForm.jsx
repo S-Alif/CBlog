@@ -6,6 +6,9 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import { useState } from "react";
 import FormWrapper from "@/components/forms/FormWrapper";
+import apiHandler from "@/helpers/api/apiHandler";
+import {POST, routes} from "@/helpers/api/apiConstants";
+import {useRouter} from "next/navigation";
 
 // login form schema
 const formSchema = z.object({
@@ -13,7 +16,7 @@ const formSchema = z.object({
     pass: z.string()
         .min(8, { message: "Password must be at least 8 characters long" })
         .max(15, { message: "Password cannot be more than 15 characters" }),
-});
+})
 
 // default values
 const defaultValues = {
@@ -23,6 +26,8 @@ const defaultValues = {
 
 // login form
 export default function LoginForm() {
+    
+    const router = useRouter()
     
     // resolver
     const form = useForm({
@@ -53,7 +58,19 @@ export default function LoginForm() {
     
     // form submit
     const handleFormSubmit = async (values) => {
-        console.log(values)
+        setLoading(true)
+        const result = await apiHandler(
+            routes.auth.login,
+            POST,
+            values,
+            true
+        )
+        setLoading(false)
+        if(!result) return
+        
+        
+        router.replace("/profile")
+        
         form.reset(defaultValues)
     }
     
