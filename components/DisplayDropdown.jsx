@@ -4,11 +4,11 @@ import {
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
 
-const DisplayDropdown = ({ children, trigger }) => {
+const DisplayDropdown = ({ children, trigger, className="" }) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className={className}>
                 {children}
             </DropdownMenuContent>
         </DropdownMenu>

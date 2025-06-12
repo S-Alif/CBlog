@@ -41,8 +41,8 @@ export default function AuthPageWrapper ({
     children,
 }) {
     return (
-        <section className={"w-full min-h-screen flex items-center justify-center"}>
-            <Card className="p-0 max-w-sm w-full shadow-none border-none">
+        <section className={"w-full min-h-screen flex items-center justify-center px-3"}>
+            <Card className="p-0 max-w-sm w-full shadow-none border-none z-10">
                 <DisplayMagicCard>
                     <CardHeader className="border-b border-border p-4 [.border-b]:pb-4">
                         <CardTitle>{title}</CardTitle>

@@ -37,7 +37,7 @@ export const Navbar = ({
         <motion.div
             ref={ref}
             // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-            className={cn("sticky inset-x-0 top-20 z-40 w-full", className)}>
+            className={cn("sticky inset-x-0 top-20 z-[100] w-full", className)}>
             {React.Children.map(children, (child) =>
                 React.isValidElement(child)
                     ? React.cloneElement(child, { visible })
@@ -70,7 +70,7 @@ export const NavBody = ({
                 minWidth: "800px",
             }}
             className={cn(
-                "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
+                "relative !z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
                 visible && "bg-white/80 dark:bg-neutral-950/80",
                 className
             )}>
@@ -107,7 +107,7 @@ export const NavItems = ({
                                 layoutId="hovered"
                                 className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800" />
                         )}
-                        <span className="relative z-20">{item.name}</span>
+                        <span className="relative z-[60]">{item.name}</span>
                     </Link>
                 ) :
                     (
@@ -124,7 +124,7 @@ export const NavItems = ({
                                             layoutId="hovered"
                                             className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800" />
                                     )}
-                                    <span className="relative z-20 flex gap-1">{item.name} <ChevronDown size={17}/></span>
+                                    <span className="relative z-[60] flex gap-1">{item.name} <ChevronDown size={17}/></span>
                                 </button>
                             }
                         >
@@ -135,7 +135,7 @@ export const NavItems = ({
                                             href={`blog-by-category?category=${dropdowns?._id}&page=1`}
                                             className="relative text-neutral-600 dark:text-neutral-300"
                                         >
-                                            <span className="block z-20">{dropdowns?.name}</span>
+                                            <span className="block z-[60]">{dropdowns?.name}</span>
                                         </Link>
                                     </DropdownMenuItem>
                                 ))
@@ -164,6 +164,7 @@ export const MobileNav = ({
                 paddingLeft: visible ? "12px" : "0px",
                 borderRadius: visible ? "4px" : "2rem",
                 y: visible ? 20 : 0,
+                zIndex: 100
             }}
             transition={{
                 type: "spring",
@@ -171,7 +172,7 @@ export const MobileNav = ({
                 damping: 50,
             }}
             className={cn(
-                "relative !z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
+                "relative !z-[100] mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
                 visible && "bg-white/80 dark:bg-neutral-950/80",
                 className
             )}>
@@ -200,18 +201,20 @@ export const MobileNavMenu = ({
 }) => {
     return (
         <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className={cn(
-                        "absolute inset-x-0 top-16 !z-[100] flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-4 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
-                        className
-                    )}>
-                    {children}
-                </motion.div>
-            )}
+            <div className={"z-[100]"}>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className={cn(
+                            "absolute inset-x-0 top-16 !z-[100] flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-4 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
+                            className
+                        )}>
+                        {children}
+                    </motion.div>
+                )}
+            </div>
         </AnimatePresence>
     );
 };

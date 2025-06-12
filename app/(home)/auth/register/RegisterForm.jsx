@@ -26,8 +26,8 @@ const formSchema = z.object({
         .max(500, { message: "About must be at most 500 characters" }).optional().nullable().or(z.literal("")),
     gender: z.enum(["male", "female", "other"]).default(""),
     approveCreds: z.string()
-        .min(10, { message: "Credentials must be at least 10 characters" })
-        .max(300, { message: "Credentials must be at most 300 characters" })
+        .min(50, { message: "Credentials must be at least 50 characters" })
+        .max(150, { message: "Credentials must be at most 150 characters" })
 })
 
 // default values

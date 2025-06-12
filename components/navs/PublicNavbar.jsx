@@ -15,7 +15,9 @@ import Link from "next/link";
 import infoStore from "@/stores/infoStore";
 import DisplayDropdown from "@/components/DisplayDropdown";
 import {DropdownMenuItem} from "@/components/ui/dropdown-menu";
-import {ChevronDown, LogIn, UserRoundCheck} from "lucide-react";
+import {ChevronDown, LogIn, PanelRightOpen, UserRoundCheck} from "lucide-react";
+import DisplaySheets from "@/components/DisplaySheets";
+import {Button} from "@/components/ui/button";
 
 export function PublicNavbar() {
 
@@ -35,8 +37,9 @@ export function PublicNavbar() {
             link: "/#featured",
         },
     ]
+    
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
         <div className="fixed w-full">
@@ -59,69 +62,76 @@ export function PublicNavbar() {
                 <MobileNav>
                     <MobileNavHeader>
                         <NavbarLogo />
-                        <MobileNavToggle
-                            className={"cursor-pointer"}
-                            isOpen={isMobileMenuOpen}
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
-                    </MobileNavHeader>
-
-                    <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
-                        {navItems.map((item, idx) => {
-                            return item?.link ? (
-                                <Link
-                                    key={idx}
-                                    href={item.link}
+                        <DisplaySheets
+                            trigger={
+                                <Button size={"icon"}>
+                                    <PanelRightOpen />
+                                </Button>
+                            }
+                            open={isMobileMenuOpen}
+                            setOpen={setIsMobileMenuOpen}
+                            side={"top"}
+                        >
+                            <div className="flex flex-col gap-3">
+                                {navItems.map((item, idx) => {
+                                    return item?.link ? (
+                                            <Link
+                                                key={idx}
+                                                href={item.link}
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className="text-neutral-600 dark:text-neutral-300 w-fit"
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        )
+                                        :
+                                        (
+                                            <DisplayDropdown
+                                                key={idx}
+                                                trigger={
+                                                    <button type="button" className={"w-fit"}>
+                                                        <span className="flex gap-1 items-center cursor-pointer">{item.name} <ChevronDown size={22}/></span>
+                                                    </button>
+                                                }
+                                            >
+                                                {
+                                                    item.dropdowns.map((category, drIdx) => (
+                                                        <DropdownMenuItem>
+                                                            <Link
+                                                                key={drIdx}
+                                                                href={`/blog-by-category?category=${category._id}&page=1`}
+                                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                                className="text-neutral-600 dark:text-neutral-300 w-fit"
+                                                            >
+                                                                {category.name}
+                                                            </Link>
+                                                        </DropdownMenuItem>
+                                                    ))
+                                                }
+                                            </DisplayDropdown>
+                                        )
+                                })}
+                            </div>
+                            <div className="flex w-full gap-4 pt-4">
+                                <NavbarButton
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="relative text-neutral-600 dark:text-neutral-300"
+                                    variant="primary"
+                                    href={"/auth/login"}
                                 >
-                                    <span className="block">{item.name}</span>
-                                </Link>
-                            )
-                            :
-                            (
-                                <DisplayDropdown
-                                    key={idx}
-                                    trigger={
-                                        <button type="button">
-                                            <span className="flex gap-1 items-center cursor-pointer">{item.name} <ChevronDown size={22}/></span>
-                                        </button>
-                                    }
+                                    <LogIn />
+                                </NavbarButton>
+                                
+                                <NavbarButton
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    variant="primary"
+                                    href={"/auth/register"}
                                 >
-                                    {
-                                        item.dropdowns.map((category, drIdx) => (
-                                            <DropdownMenuItem>
-                                                <Link
-                                                    key={drIdx}
-                                                    href={`/blog-by-category?category=${category._id}&page=1`}
-                                                    onClick={() => setIsMobileMenuOpen(false)}
-                                                    className="relative text-neutral-600 dark:text-neutral-300"
-                                                >
-                                                    <span className="block">{category.name}</span>
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        ))
-                                    }
-                                </DisplayDropdown>
-                            )
-                        })}
-                        <div className="flex w-full gap-4">
-                            <NavbarButton
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                variant="primary"
-                                href={"/auth/login"}
-                            >
-                                <LogIn />
-                            </NavbarButton>
+                                    <UserRoundCheck />
+                                </NavbarButton>
+                            </div>
                             
-                            <NavbarButton
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                variant="primary"
-                                href={"/auth/register"}
-                            >
-                                <UserRoundCheck />
-                            </NavbarButton>
-                        </div>
-                    </MobileNavMenu>
+                        </DisplaySheets>
+                    </MobileNavHeader>
                 </MobileNav>
             </Navbar>
             {/* Navbar */}
