@@ -1,7 +1,7 @@
-// page metadata
 import AuthPageWrapper from "@/components/AuthPageWrapper";
 import VerifyOtpForm from "@/app/(home)/auth/verify-otp/VerifyOtpForm";
 
+// page metadata
 export const metadata = {
     title: 'Verify your account',
     description: 'Verify your account with the otp',
