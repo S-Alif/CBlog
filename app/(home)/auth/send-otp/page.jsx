@@ -2,6 +2,13 @@ import AuthPageWrapper from "@/components/AuthPageWrapper";
 import SendOtpForm from "@/app/(home)/auth/send-otp/SendOtpForm";
 
 
+// page metadata
+export const metadata = {
+    title: 'Send verification email',
+    description: 'Send verification code to users email',
+}
+
+// send otp page
 export default function SendOtpPage () {
     return (
         <AuthPageWrapper
