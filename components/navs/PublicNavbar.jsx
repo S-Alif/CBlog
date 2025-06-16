@@ -98,7 +98,7 @@ export function PublicNavbar() {
                                                     item.dropdowns.map((category, drIdx) => (
                                                         <DropdownMenuItem>
                                                             <Link
-                                                                key={drIdx}
+                                                                key={`category.name-${drIdx}`}
                                                                 href={`/blog-by-category?category=${category._id}&page=1`}
                                                                 onClick={() => setIsMobileMenuOpen(false)}
                                                                 className="text-neutral-600 dark:text-neutral-300 w-fit"

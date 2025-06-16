@@ -27,6 +27,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body
                 className={`${roboto.variable} ${robotoMono.variable} antialiased`}
+                id={"root"}
             >
                 <ThemeProvider
                     attribute="class"

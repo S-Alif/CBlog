@@ -14,9 +14,10 @@ const actorStore = create((set) => ({
             routes.user.profile,
             GET
         )
+        // console.log(result)
         if(result) {
             set({
-                user: result.user,
+                user: result,
             })
         }
     },

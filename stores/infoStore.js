@@ -22,7 +22,7 @@ const infoStore = create((set) => ({
         ])
 
         // need to get site data when implemented
-        console.log(category, tags)
+        // console.log(category, tags)
 
         set({
             category: category,

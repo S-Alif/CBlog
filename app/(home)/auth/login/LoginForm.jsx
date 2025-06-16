@@ -9,6 +9,7 @@ import FormWrapper from "@/components/forms/FormWrapper";
 import apiHandler from "@/helpers/api/apiHandler";
 import {POST, routes} from "@/helpers/api/apiConstants";
 import {useRouter} from "next/navigation";
+import actorStore from "@/stores/actorStore";
 
 // login form schema
 const formSchema = z.object({
@@ -28,6 +29,7 @@ const defaultValues = {
 export default function LoginForm() {
     
     const router = useRouter()
+    const {setUser} = actorStore()
     
     // resolver
     const form = useForm({
@@ -68,10 +70,9 @@ export default function LoginForm() {
         setLoading(false)
         if(!result) return
         
-        
-        router.replace("/profile")
-        
-        form.reset(defaultValues)
+        await setUser()  // get user profile
+        form.reset(defaultValues) // empty login form
+        router.replace("/profile") // go to profile page
     }
     
     return (
