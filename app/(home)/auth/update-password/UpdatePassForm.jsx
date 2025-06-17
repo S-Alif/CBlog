@@ -4,8 +4,11 @@ import FormWrapper from "@/components/forms/FormWrapper";
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import InputField from "@/components/forms/InputField";
+import {useRouter} from "next/navigation";
+import apiHandler from "@/helpers/api/apiHandler";
+import {POST, routes} from "@/helpers/api/apiConstants";
 
 // update password form schema
 const formSchema = z.object({
@@ -27,6 +30,8 @@ const defaultValues = {
 }
 
 export default function UpdatePassForm() {
+    
+    const router = useRouter()
     
     // resolver
     const form = useForm({
@@ -54,12 +59,40 @@ export default function UpdatePassForm() {
     
     // loading state
     const [loading, setLoading] = useState(false)
+    const additionalDataToUpdatePass = useRef(null)
     
     // form submit
     const handleFormSubmit = async (values) => {
-        console.log(values)
-        form.reset(defaultValues)
+        // console.log(values)
+        const data = {
+            ...additionalDataToUpdatePass.current,
+            ...values,
+        }
+        setLoading(true)
+        const result = await apiHandler(
+            routes.auth.updateForgetPass,
+            POST,
+            data,
+            true
+        )
+        
+        if(result) {
+            form.reset(defaultValues)
+            sessionStorage.removeItem("sendOtpData")
+            return router.replace("/auth/login")
+        }
+        setLoading(false)
     }
+    
+    // set the data from session storage
+    useEffect(() => {
+        const additionalDataFromStorage = JSON.parse(sessionStorage.getItem("sendOtpData"))
+        if(!additionalDataFromStorage) {
+            return router.replace("/auth/login")
+        }
+        additionalDataToUpdatePass.current = additionalDataFromStorage
+    }, [])
+    
     
     return (
         <FormWrapper
