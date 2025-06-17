@@ -26,7 +26,9 @@ const actorStore = create((set) => ({
     logout: async () => {
         await apiHandler(
             routes.auth.logout,
-            GET
+            GET,
+            {},
+            true
         )
         set({
             user: null,

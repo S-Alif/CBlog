@@ -9,7 +9,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if(typeof window !== "undefined") {
-			(async () => {await getInitialData()})()
+			getInitialData()
 		}
 	}, [])
 
