@@ -9,6 +9,9 @@ import FormWrapper from "@/components/forms/FormWrapper";
 import SelectField from "@/components/forms/SelectField";
 import {SelectItem} from "@/components/ui/select";
 import TextareaField from "@/components/forms/TextareaField";
+import apiHandler from "@/helpers/api/apiHandler";
+import {routes, POST} from "@/helpers/api/apiConstants";
+import {useRouter} from "next/navigation";
 
 
 // form schema
@@ -35,12 +38,14 @@ const defaultValues = {
     name: "",
     email: "",
     pass: "",
-    gender: "",
+    gender: "male",
     approveCreds: "",
 }
 
 // register form
 export default function RegisterForm () {
+    
+    const router = useRouter()
     
     // resolver
     const form = useForm({
@@ -96,8 +101,30 @@ export default function RegisterForm () {
     
     // form submit
     const handleFormSubmit = async (values) => {
-        console.log(values)
-        form.reset(defaultValues)
+        // console.log(values)
+        setLoading(true)
+        const result = await apiHandler(
+            routes.auth.register,
+            POST,
+            values,
+            true
+        )
+        
+        if(result) {
+            form.reset(defaultValues)
+            // set the email and type to session storage
+            const sendOtpData = {
+                email: values.email,
+                type: 10
+            }
+            sessionStorage.setItem("sendOtpData", JSON.stringify(sendOtpData))
+            
+            // go to send-otp page
+            // otp will be sent from there
+            router.replace("/auth/verify-otp")
+            return
+        }
+        setLoading(false)
     }
     
     return (
