@@ -7,6 +7,8 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
 import InputField from "@/components/forms/InputField";
 import {useRouter} from "next/navigation";
+import apiHandler from "@/helpers/api/apiHandler";
+import {POST, routes} from "@/helpers/api/apiConstants";
 
 // send-otp form schema
 const formSchema = z.object({
@@ -34,10 +36,21 @@ export default function SendOtpForm() {
     
     // form submit
     const handleFormSubmit = async (values) => {
-        console.log(values)
-        sessionStorage.setItem("sendOtpData", JSON.stringify(values))
-        form.reset(defaultValues)
-        router.replace("/auth/verify-otp")
+        // console.log(values)
+        setLoading(true)
+        const result = await apiHandler(
+            routes.auth.sendOtp,
+            POST,
+            values,
+            true
+        )
+        if(result) {
+            sessionStorage.setItem("sendOtpData", JSON.stringify(values))
+            form.reset(defaultValues)
+            router.replace("/auth/verify-otp")
+            return
+        }
+        setLoading(false)
     }
     
     return (

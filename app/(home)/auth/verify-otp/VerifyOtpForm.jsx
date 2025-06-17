@@ -57,9 +57,10 @@ export default function VerifyOtpForm() {
         
         if(result) {
             form.reset(defaultValues)
+            localStorage.removeItem("timer")
+            
             if(otpData.current?.type && otpData.current.type == 10) {
                 sessionStorage.removeItem("sendOtpData")
-                localStorage.removeItem("timer")
                 return router.replace("/auth/login")
             }
             return router.replace("/auth/update-password")
@@ -99,19 +100,13 @@ export default function VerifyOtpForm() {
     
     // fetch the email
     useEffect(() => {
-        // check if there was an otp sent before if the timer is less than 120 but not 0
-        // the otp was sent and have to wait until the timer is finished
-        const getTimerFromLocalStorage = JSON.parse(localStorage.getItem("timer"))
-        if(getTimerFromLocalStorage && getTimerFromLocalStorage > 0){
-            setIsDisabled(true)
-            return setTimer(getTimerFromLocalStorage)
-        }
         
         const data = JSON.parse(sessionStorage.getItem("sendOtpData"))
-        console.log(data)
+        // console.log(data)
         if(!data || !data?.email) {
             return router.replace("/auth/login")
         }
+        
         let dataOtp = {}
         if(data?.email){
             dataOtp.email = data?.email
@@ -121,6 +116,21 @@ export default function VerifyOtpForm() {
         }
         
         otpData.current = dataOtp
+        
+        // check if there was an otp sent before if the timer is less than 120 but not 0
+        // the otp was sent and have to wait until the timer is finished
+        const getTimerFromLocalStorage = JSON.parse(localStorage.getItem("timer"))
+        if(getTimerFromLocalStorage && getTimerFromLocalStorage > 0){
+            setIsDisabled(true)
+            return setTimer(getTimerFromLocalStorage)
+        }
+        
+        
+        if(!data?.type || data?.type != 10) {
+            setTimer(200)
+            return setIsDisabled(true)
+        }
+        
         
         // call send otp for otp sending
         sendOtp()
