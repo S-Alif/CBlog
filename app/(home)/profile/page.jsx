@@ -1,11 +1,14 @@
-export const metadata = {
-    title: "Your Profile",
-    description: "User personal profile"
-}
-
 // profile page
+import {PageSection} from "@/components/Sections";
+
 export default function ProfilePage () {
     return (
-        <div>profile</div>
+        <PageSection
+            breadcrumbs={["Home", "Profile"]}
+            id="user-personal-profile"
+            className={"page-section"}
+        >
+        
+        </PageSection>
     )
 }
