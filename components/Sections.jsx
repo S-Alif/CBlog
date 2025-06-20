@@ -50,15 +50,21 @@ export function SectionTitle({children}) {
 }
 
 // individual sections
-export function IndividualSection({children, className = "", sectionId = "individual", sectionTitle = null}) {
+export function IndividualSection({
+    children,
+    className = "",
+    sectionId = "individual",
+    sectionTitle = null,
+    containerClassName = ""
+}) {
     return (
-        <section className={`individual-section ${className}`} id={sectionId}>
+        <section className={className} id={sectionId}>
             <div className="container">
                 {
                     sectionTitle &&
                     <SectionTitle>{sectionTitle}</SectionTitle>
                 }
-                <div className={"pt-10"}>
+                <div className={containerClassName}>
                     {children}
                 </div>
             </div>
