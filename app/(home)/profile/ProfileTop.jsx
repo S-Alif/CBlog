@@ -8,6 +8,7 @@ import DisplayAvatar from "@/components/DisplayAvatar";
 import {Button} from "@/components/ui/button";
 import {LayoutDashboard, UserPen} from "lucide-react";
 import {useIsMobile} from "@/hooks/use-mobile";
+import {useEffect} from "react";
 
 
 const linkButtons = [
@@ -27,10 +28,15 @@ const linkButtons = [
 // profile top
 export default function ProfileTop() {
     
-    const {user} = actorStore()
+    const {user, setUser} = actorStore()
     const router  = useRouter()
     const isMobile = useIsMobile()
     const pathname = usePathname()
+    
+    
+    useEffect(() => {
+        if(!user) setUser()
+    }, [])
     
     
     return (

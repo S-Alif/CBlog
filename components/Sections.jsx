@@ -5,6 +5,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import {Fragment} from "react";
+import {Loader} from "./Loader"
 
 // breadcrumb
 export function DisplayBreadcrumb ({breadcrumbs = []}) {
@@ -55,7 +56,8 @@ export function IndividualSection({
     className = "",
     sectionId = "individual",
     sectionTitle = null,
-    containerClassName = ""
+    containerClassName = "",
+    loading= false
 }) {
     return (
         <section className={className} id={sectionId}>
@@ -64,10 +66,13 @@ export function IndividualSection({
                     sectionTitle &&
                     <SectionTitle>{sectionTitle}</SectionTitle>
                 }
-                <div className={containerClassName}>
-                    {children}
-                </div>
+                {
+                    loading ?
+                        <Loader/> :
+                        <div className={containerClassName}>
+                            {children}
+                        </div>
+                }
             </div>
-        </section>
-    )
+        </section>)
 }

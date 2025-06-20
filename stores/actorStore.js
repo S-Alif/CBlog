@@ -7,6 +7,16 @@ import {GET, routes} from "@/helpers/api/apiConstants";
 
 const actorStore = create((set) => ({
     user: null,
+    userDashboard: null,
+    adminDashboard: null,
+    userPopularBlogs: [], // store some popular blogs for user
+    userLatestBlogs: [], // store some latest blogs of user
+    
+    setData: (stateName, data) => {
+        set({
+            [stateName]: data
+        })
+    },
     
     // fetches user profile after login or after updating it
     setUser: async () => {
@@ -18,6 +28,34 @@ const actorStore = create((set) => ({
         if(result) {
             set({
                 user: result,
+            })
+        }
+    },
+    
+    // fetches user dashboard after login or refreshing it manually
+    setUserDashboard: async () => {
+        const result = await apiHandler(
+            routes.dashboard.user,
+            GET
+        )
+        // console.log(result)
+        if(result) {
+            set({
+                userDashboard: result,
+            })
+        }
+    },
+    
+    // fetches user dashboard after login or refreshing it manually
+    setAdminDashboard: async () => {
+        const result = await apiHandler(
+            routes.dashboard.admin,
+            GET
+        )
+        // console.log(result)
+        if(result) {
+            set({
+                adminDashboard: result,
             })
         }
     },

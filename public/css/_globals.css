@@ -8,8 +8,8 @@
 }
 
 .section-title{
-    @apply text-xl md:text-2xl xl:text-3xl font-bold mb-12 relative;
-    @apply before:w-1 before:h-3/4 before:absolute before:bg-primary before:rounded-md before:top-0 before:left-0;
+    @apply text-xl md:text-2xl xl:text-3xl font-bold mb-12 relative pl-4;
+    @apply before:w-1 before:h-3/4 before:absolute before:bg-primary before:rounded-md before:top-1/2 before:translate-y-[-50%] before:left-0;
 }
 
 .individual-section {
