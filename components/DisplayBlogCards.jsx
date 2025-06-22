@@ -4,10 +4,15 @@ import actorStore from "@/stores/actorStore";
 import {format} from "date-fns";
 import Link from "next/link"
 import {Send, ChartNoAxesColumn} from "lucide-react"
+import DisplayDialogue from "@/components/DisplayDialogue";
+import {Category} from "@/components/DisplayCategory";
+import {DisplayTags} from "@/components/DisplayTags";
 
+
+// blog cards
 export function BlogCards({item}) {
     
-    const {user} = actorStore()
+    const {user, isAdmin, isModerator} = actorStore()
     
     return (
         <Card className={"py-3 shadow-lg"}>
@@ -34,27 +39,43 @@ export function BlogCards({item}) {
                     </DisplayAvatar>
                     {/*options*/}
                     <div className={"flex items-center justify-between gap-4"}>
+                        {/*display blog details*/}
                         {
-                            (user?._id === item?.authorId?._id) &&
-                            <button className={"cursor-pointer"}>
-                                <ChartNoAxesColumn />
-                            </button>
+                            ((user?._id === item?.authorId?._id) || (isAdmin || isModerator)) &&
+                            <DisplayDialogue
+                                title={"Blog details"}
+                                description={`For - ${item?.name}`}
+                                trigger={
+                                    <button className={"cursor-pointer"}>
+                                        <ChartNoAxesColumn/>
+                                    </button>
+                                }
+                            >
+                                <h3 className={"text-7xl"}>{item?.totalViews}</h3>
+                                <div className={"pt-4"}>
+                                    <h3 className={"font-bold text-base pb-4"}>Category</h3>
+                                    <Category item={item?.categoryId}/>
+                                </div>
+                                <div className={"pt-4"}>
+                                    <DisplayTags items={item?.tags} />
+                                </div>
+                            
+                            </DisplayDialogue>
                         }
-                        <Link href={`/blog/${item?._id}`}>
-                            <Send size={18} />
+                        {/*link to the blog*/}
+                        <Link href={`/blogs/${item?._id}`}>
+                            <Send size={18}/>
                         </Link>
                     </div>
                 </div>
             </CardFooter>
-        </Card>
-    )
+        </Card>)
 }
 
 
-// display blogs
+// display blog cards
 export function DisplayBlogCards({items = []}) {
-    return (
-        <div className={"w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"}>
+    return (<div className={"w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"}>
             {
                 items.map((item, index) => (
                     <BlogCards item={item} key={index}/>

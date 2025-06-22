@@ -4,9 +4,12 @@
 import {create} from "zustand";
 import apiHandler from "@/helpers/api/apiHandler";
 import {GET, routes} from "@/helpers/api/apiConstants";
+import {roles} from "@/lib/constants/roleConstants";
 
 const actorStore = create((set) => ({
     user: null,
+    isAdmin: false,
+    isModerator: false,
     userDashboard: null,
     adminDashboard: null,
     userPopularBlogs: [], // store some popular blogs for user
@@ -28,6 +31,8 @@ const actorStore = create((set) => ({
         if(result) {
             set({
                 user: result,
+                isAdmin: result?.roles.includes(roles.ADMIN),
+                isModerator: result?.roles.includes(roles.MODERATOR),
             })
         }
     },
