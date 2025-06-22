@@ -31,7 +31,7 @@ export function AvatarInfo ({user, setIsMobileMenuOpen = null, logout}) {
         <DisplayDropdown
             trigger={
                 <button type={"button"} className={"cursor-pointer"}>
-                    <DisplayAvatar user={user} />
+                    <DisplayAvatar userData={user} />
                 </button>
             }
         >

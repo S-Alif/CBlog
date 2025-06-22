@@ -31,7 +31,7 @@ export function BlogCards({item}) {
             <CardFooter className={"px-3"}>
                 <div className={"flex items-center justify-between gap-4 bg-gray-100 w-full p-4 rounded-md"}>
                     <DisplayAvatar
-                        user={item?.authorId}
+                        userData={item?.authorId}
                         squared={true}
                         setLink={true}
                     >

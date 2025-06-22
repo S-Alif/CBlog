@@ -55,7 +55,7 @@ export default function ProfileTop() {
             
             <div className={"pt-4"}>
                 <div className={"flex items-center justify-between gap-4"}>
-                    <DisplayAvatar user={user} squared={true} size={"lg"} />
+                    <DisplayAvatar userData={user} squared={true} size={"lg"} />
                     
                     {/*links*/}
                     <div>

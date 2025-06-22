@@ -29,7 +29,7 @@ export default function DashboardUser() {
             apiHandler(`${routes.user.blogs}/?limit=4&sort=popular`),
             apiHandler(`${routes.user.blogs}/?limit=4`)
         ])
-        console.log(popular.blogs, newest.blogs)
+        // console.log(popular.blogs, newest.blogs)
         
         if(popular) setData("userPopularBlogs", popular?.blogs || [])
         if(newest) setData("userLatestBlogs", newest?.blogs || [])
@@ -62,11 +62,22 @@ export default function DashboardUser() {
             {/*popular blogs*/}
             <IndividualSection
                 className={"individual-section"}
-                sectionId={"profile-top-data-cards"}
-                sectionTitle={"Your Popular Blogs"}
+                sectionId={"profile-top-popular-blogs"}
+                sectionTitle={"Popular Blogs"}
                 loading={loading}
             >
                 <DisplayBlogCards items={userPopularBlogs} />
+            
+            </IndividualSection>
+            
+            {/*newest blogs*/}
+            <IndividualSection
+                className={"individual-section"}
+                sectionId={"profile-top-newest-blogs"}
+                sectionTitle={"Latest Blogs"}
+                loading={loading}
+            >
+                <DisplayBlogCards items={userLatestBlogs} />
             
             </IndividualSection>
         </Fragment>

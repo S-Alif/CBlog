@@ -13,5 +13,5 @@
 }
 
 .individual-section {
-    @apply w-full h-auto py-16 block;
+    @apply w-full h-auto pt-20 block;
 }
