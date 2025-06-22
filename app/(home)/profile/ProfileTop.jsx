@@ -45,7 +45,7 @@ export default function ProfileTop() {
             sectionId={"profile-top"}
             containerClassName={"bg-gray-200 p-3 rounded-md"}
         >
-            <div className={"w-full h-[30vh] rounded-lg"}>
+            <div className={"w-full h-[40vh] rounded-lg"}>
                 <img
                     src={user?.bannerImg}
                     alt={`${user?.name || "User"} profile`}

@@ -32,6 +32,7 @@ export default function InputOtpField ({
     name="FormLabel",
     form,
     description = null,
+    disabled = false,
 }) {
     return (
         <FormField
@@ -41,7 +42,7 @@ export default function InputOtpField ({
                 <FormItem>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <InputOTP maxLength={6} {...field}>
+                        <InputOTP {...field} maxLength={6} disabled={disabled} >
                             <InputOTPGroup>
                                 <InputOTPSlot index={0} />
                                 <InputOTPSlot index={1} />

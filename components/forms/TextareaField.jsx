@@ -25,7 +25,14 @@
 
 "use client"
 
-import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+} from "@/components/ui/form";
 import {Textarea} from "@/components/ui/textarea";
 
 export default function TextareaField({
@@ -34,6 +41,7 @@ export default function TextareaField({
     form,
     placeholder = "Form placeholder",
     description = null,
+    disabled=false
 }) {
     return (
         <FormField
@@ -44,9 +52,10 @@ export default function TextareaField({
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
                         <Textarea
+                            {...field}
                             placeholder={placeholder}
                             className="resize-none"
-                            {...field}
+                            disabled={disabled}
                         />
                     </FormControl>
                     {

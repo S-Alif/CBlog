@@ -37,6 +37,7 @@ export default function InputField ({
     placeholder = "Form placeholder",
     type = "text",
     description = null,
+    disabled = false,
 }) {
     return (
         <FormField
@@ -46,7 +47,12 @@ export default function InputField ({
                 <FormItem>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <Input type={type} placeholder={placeholder} {...field} />
+                        <Input
+                            {...field}
+                            type={type}
+                            placeholder={placeholder}
+                            disabled={disabled}
+                        />
                     </FormControl>
                     {
                         description &&

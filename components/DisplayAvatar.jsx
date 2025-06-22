@@ -11,7 +11,7 @@ function CreateAvatar ({
     return (
         <div className={"flex gap-4 items-center"}>
             <Avatar className={`${squared ? "rounded-md" : ""} ${size === "lg" ? "w-[75px] h-[75px]" : ""}`}>
-                <AvatarImage src={userData?.image} />
+                <AvatarImage src={userData?.image} className={"object-cover object-center"} />
                 <AvatarFallback>{userData?.name?.substring(0,2) || "user profile"}</AvatarFallback>
             </Avatar>
             <div>
