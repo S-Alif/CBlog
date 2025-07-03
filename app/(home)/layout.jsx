@@ -36,7 +36,9 @@ export default function RootLayout({ children }) {
                     disableTransitionOnChange
                 >
                     <PublicNavbar />
-                    {children}
+                    <main className={"w-full h-full"}>
+                        {children}
+                    </main>
                 </ThemeProvider>
                 <Toaster
                     visibleToasts={5}
