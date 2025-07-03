@@ -57,7 +57,7 @@ const actorStore = create((set) => ({
             routes.dashboard.admin,
             GET
         )
-        // console.log(result)
+        console.log(result)
         if(result) {
             set({
                 adminDashboard: result,
@@ -76,6 +76,7 @@ const actorStore = create((set) => ({
         set({
             user: null,
         })
+        window.location.replace("/")
     }
 }))
 

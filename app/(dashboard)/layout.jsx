@@ -3,6 +3,9 @@ import "../globals.css";
 import {ThemeProvider} from "next-themes";
 import {Toaster} from "@/components/ui/sonner";
 import SideNavbar from "@/components/navs/SideNavbar";
+import {checkAuth} from "@/helpers/check-auth/check-auth";
+import {roles} from "@/lib/constants/roleConstants";
+import {redirect} from "next/navigation";
 
 const roboto = Roboto({
     subsets: ["latin"],
@@ -22,7 +25,11 @@ export const metadata = {
     description: "For admins and moderators to control everything on the platform",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    
+    const validUser = await checkAuth([roles.ADMIN, roles.MODERATOR])
+    if(!validUser) return redirect("/auth/login")
+    
     return (
         <html lang="en">
         <body
