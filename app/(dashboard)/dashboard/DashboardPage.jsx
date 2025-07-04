@@ -50,7 +50,7 @@ export default function DashboardPage () {
                 sectionId={"dashboard-graphs"}
                 loading={loading}
                 sectionTitle={"Data visuals"}
-                className={"individual-section"}
+                className={"individual-section pb-20"}
             >
                 <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
                     {

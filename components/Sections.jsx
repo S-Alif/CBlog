@@ -58,15 +58,32 @@ export function IndividualSection({
     sectionId = "individual",
     sectionTitle = null,
     containerClassName = "",
-    loading= false
+    loading= false,
+    sectionSideComponents = null
 }) {
     return (
         <section className={className} id={sectionId}>
             <div className="container">
                 {
                     sectionTitle &&
-                    <SectionTitle>{sectionTitle}</SectionTitle>
+                    <div className={"flex justify-between w-full"}>
+                        <SectionTitle>{sectionTitle}</SectionTitle>
+                        {
+                            sectionSideComponents &&
+                            <div>
+                                {sectionSideComponents}
+                            </div>
+                        }
+                    </div>
                 }
+                
+                {
+                    (!sectionTitle && sectionSideComponents) &&
+                    <div className={"mb-12"}>
+                        {sectionSideComponents}
+                    </div>
+                }
+                
                 {
                     loading ?
                         <Loader/> :

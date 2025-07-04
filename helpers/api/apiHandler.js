@@ -14,7 +14,12 @@ import axios from 'axios'
 import {errorToast, successToast} from "@/helpers/toasts/toastNofifications";
 
 
-const apiHandler = async (url, method = "GET", data = {}, showToast = false) => {
+const apiHandler = async (
+    url,
+    method = "GET",
+    data = {}, showToast = false,
+    showErrorToast = false
+) => {
     const options = {
         url,
         method,
@@ -36,14 +41,17 @@ const apiHandler = async (url, method = "GET", data = {}, showToast = false) => 
     catch (error) {
         console.error('API request failed:', error)
         const message = error?.response?.data?.message
-        if (message) {
+        if (showErrorToast) {
             // show the toast notification with the error message
-            errorToast(message)
+            if(message) {
+                errorToast(message)
+            }
+            else {
+                // show a generic error message
+                errorToast("Something went wrong")
+            }
         }
-        else {
-            // show a generic error message
-            errorToast("Something went wrong")
-        }
+        
         return false
     }
 
