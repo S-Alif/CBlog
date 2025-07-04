@@ -38,7 +38,8 @@ export function PageSection({children, id = "page", className = "", breadcrumbs 
             <div>
                 {children}
             </div>
-        </section>)
+        </section>
+    )
 }
 
 // section title
@@ -74,5 +75,6 @@ export function IndividualSection({
                         </div>
                 }
             </div>
-        </section>)
+        </section>
+    )
 }

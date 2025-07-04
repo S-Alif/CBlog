@@ -42,7 +42,7 @@ export default function SideNavbar({ children }) {
 						</BreadcrumbList>
 					</Breadcrumb>
 				</header>
-				<div className="flex gap-4 p-4">
+				<div className="p-4">
 					{children}
 				</div>
 			</SidebarInset>

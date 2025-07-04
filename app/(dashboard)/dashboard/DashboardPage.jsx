@@ -4,7 +4,10 @@ import {Fragment, useEffect, useState} from "react";
 import actorStore from "@/stores/actorStore";
 import {IndividualSection} from "@/components/Sections";
 import {DisplayDataCards} from "@/components/DisplayDataCards";
+import BarCharts from "@/components/charts/BarCharts";
 
+
+// dashboard page
 export default function DashboardPage () {
     
     const [loading, setLoading] = useState(false)
@@ -24,12 +27,13 @@ export default function DashboardPage () {
     }
     
     useEffect(() => {
-        console.log(adminDashboard, isAdmin, isModerator)
+        // console.log(adminDashboard, isAdmin, isModerator)
         if(typeof window !== "undefined") {
             if(!isAdmin && !isModerator && adminDashboard != null) return
             getAdminDashboards()
         }
     }, [user])
+    
     
     return (
         <Fragment>
@@ -37,12 +41,31 @@ export default function DashboardPage () {
                 sectionId={"dashboard-summary"}
                 loading={loading}
                 sectionTitle={"Summary"}
-                className={"w-full"}
             >
                 <DisplayDataCards items={adminDashboard?.cards || []} />
             
             </IndividualSection>
             
+            <IndividualSection
+                sectionId={"dashboard-graphs"}
+                loading={loading}
+                sectionTitle={"Data visuals"}
+                className={"individual-section"}
+            >
+                <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
+                    {
+                        adminDashboard?.graphs?.map((chart, index) => (
+                            <BarCharts
+                                key={index}
+                                data={chart?.data}
+                                chartCaption={chart?.name}
+                                nameKey={"name"}
+                                dataKey={"count"}
+                            />
+                        ))
+                    }
+                </div>
+            </IndividualSection>
             
         </Fragment>
     )
