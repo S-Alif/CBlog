@@ -18,7 +18,7 @@ const apiHandler = async (
     url,
     method = "GET",
     data = {}, showToast = false,
-    showErrorToast = false
+    showErrorToast = true
 ) => {
     const options = {
         url,

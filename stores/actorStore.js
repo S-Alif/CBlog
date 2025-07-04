@@ -25,7 +25,10 @@ const actorStore = create((set) => ({
     setUser: async () => {
         const result = await apiHandler(
             routes.user.profile,
-            GET
+            GET,
+            {},
+            false,
+            false
         )
         // console.log(result)
         if(result) {

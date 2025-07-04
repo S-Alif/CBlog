@@ -7,11 +7,13 @@ import {Button} from "@/components/ui/button";
 import {PlusIcon} from "lucide-react";
 import infoStore from "@/stores/infoStore";
 import {DisplayCategory} from "@/components/DisplayCategory";
+import actorStore from "@/stores/actorStore";
 
 
 export default function CategoryDashboardPage() {
     
     const {category, setInfo} = infoStore()
+    const {isAdmin} = actorStore()
     
     return (
         <PageSection
@@ -25,9 +27,11 @@ export default function CategoryDashboardPage() {
                     <DisplayDialogue
                         trigger={<Button size={"icon"}><PlusIcon /></Button>}
                         title={"Add new category"}
-                        description={"Add new categories from here"}
+                        description={"Add new categories from here (ONLY FOR ADMIN)"}
                     >
-                        <CategoryForm />
+                        {
+                            isAdmin && <CategoryForm />
+                        }
                     </DisplayDialogue>
                 }
             >

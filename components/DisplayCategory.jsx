@@ -5,15 +5,20 @@ import actorStore from "@/stores/actorStore";
 import DisplayDialogue from "@/components/DisplayDialogue";
 import CategoryForm from "@/app/(dashboard)/dashboard/category/CategoryForm";
 import {infoToast} from "@/helpers/toasts/toastNofifications";
+import apiHandler from "@/helpers/api/apiHandler";
+import infoStore from "@/stores/infoStore";
+import {DELETE, routes} from "@/helpers/api/apiConstants";
 
 // category
 export function Category ({item}) {
     
     const {isAdmin, isModerator} = actorStore()
+    const {getInitialData} = infoStore()
+    
     
     return (
-        <div className={"max-w-[200px]"}>
-            <div className={"aspect-square max-w-[200px] overflow-hidden rounded-md relative"}>
+        <div className={"max-w-[300px]"}>
+            <div className={"aspect-square max-w-[300px] overflow-hidden rounded-md relative"}>
                 <img
                     src={item?.image}
                     alt={item?.name}
@@ -38,15 +43,36 @@ export function Category ({item}) {
                         </DisplayDialogue>
                         
                         {/*remove category button*/}
-                        <Button
-                            size={"icon"}
-                            variant={"secondary"}
-                            onClick={async () => {
-                                if(!isAdmin) return infoToast("Only an admin can update or remove a category")
-                            }}
+                        <DisplayDialogue
+                            title={"Are you sure ?"}
+                            description={"This action cannot be undone"}
+                            trigger={
+                                <Button size={"icon"} variant={"secondary"}><X size={18}/></Button>
+                            }
                         >
-                            <X size={18}/>
-                        </Button>
+                            <div>
+                                <h2 className={"pb-4"}>If this category has any blog associated with it, then it cannot be removed. Consider updating it then.</h2>
+                                <Button
+                                    size={"lg"}
+                                    variant={"destructive"}
+                                    onClick={async () => {
+                                        if(!isAdmin) return infoToast("Only an admin can update or remove a category")
+                                        
+                                        {/* remove category */}
+                                        const result = await apiHandler(
+                                            `${routes.category}/${item?._id}`,
+                                            DELETE,
+                                            {},
+                                            true,
+                                            true
+                                        )
+                                        if(result) await getInitialData()
+                                    }}
+                                >
+                                    Remove
+                                </Button>
+                            </div>
+                        </DisplayDialogue>
                         
                     </div>
                 }
