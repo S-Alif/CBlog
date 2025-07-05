@@ -3,6 +3,7 @@ import "../globals.css";
 import { PublicNavbar } from "@/components/navs/PublicNavbar";
 import {ThemeProvider} from "next-themes";
 import {Toaster} from "@/components/ui/sonner";
+import NextTopLoader from "nextjs-toploader";
 
 const roboto = Roboto({
     subsets: ["latin"],
@@ -35,6 +36,15 @@ export default function RootLayout({ children }) {
                     enableSystem
                     disableTransitionOnChange
                 >
+                    <NextTopLoader
+                        height={10}
+                        color={"#f25518"}
+                        zIndex={2000}
+                        crawl={true}
+                        template='<div class="bar" role="bar"><div class="peg"></div></div>
+  <div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
+                        speed={300}
+                    />
                     <PublicNavbar />
                     <main className={"w-full h-full"}>
                         {children}

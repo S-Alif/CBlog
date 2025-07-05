@@ -6,6 +6,7 @@ import SideNavbar from "@/components/navs/SideNavbar";
 import {checkAuth} from "@/helpers/check-auth/check-auth";
 import {roles} from "@/lib/constants/roleConstants";
 import {redirect} from "next/navigation";
+import NextTopLoader from "nextjs-toploader";
 
 const roboto = Roboto({
     subsets: ["latin"],
@@ -25,6 +26,8 @@ export const metadata = {
     description: "For admins and moderators to control everything on the platform",
 };
 
+
+// dashboard root layout
 export default async function RootLayout({ children }) {
     
     const validUser = await checkAuth([roles.ADMIN, roles.MODERATOR])
@@ -42,6 +45,15 @@ export default async function RootLayout({ children }) {
                 enableSystem
                 disableTransitionOnChange
             >
+                <NextTopLoader
+                    height={10}
+                    color={"#f25518"}
+                    zIndex={2000}
+                    crawl={true}
+                    template='<div class="bar" role="bar"><div class="peg"></div></div>
+  <div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
+                    speed={300}
+                />
                 <SideNavbar>
                     {children}
                 </SideNavbar>

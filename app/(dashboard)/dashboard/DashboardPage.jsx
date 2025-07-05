@@ -41,6 +41,7 @@ export default function DashboardPage () {
                 sectionId={"dashboard-summary"}
                 loading={loading}
                 sectionTitle={"Summary"}
+                className={"individual-section !pt-10"}
             >
                 <DisplayDataCards items={adminDashboard?.cards || []} />
             
