@@ -17,13 +17,16 @@ import {errorToast, successToast} from "@/helpers/toasts/toastNofifications";
 const apiHandler = async (
     url,
     method = "GET",
-    data = {}, showToast = false,
-    showErrorToast = true
+    data = {},
+    showToast = false,
+    showErrorToast = true,
+    customHeaders = null,
 ) => {
     const options = {
         url,
         method,
-        data
+        data,
+        ...(customHeaders || {}),
     }
 
     try {

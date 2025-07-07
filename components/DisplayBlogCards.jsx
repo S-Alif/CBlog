@@ -1,3 +1,5 @@
+"use client"
+
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import DisplayAvatar from "@/components/DisplayAvatar";
 import actorStore from "@/stores/actorStore";
@@ -75,7 +77,8 @@ export function BlogCards({item}) {
 
 // display blog cards
 export function DisplayBlogCards({items = []}) {
-    return (<div className={"w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"}>
+    return (
+        <div className={"w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"}>
             {
                 items.map((item, index) => (
                     <BlogCards item={item} key={index}/>
