@@ -18,7 +18,7 @@ export function BlogCards({item}) {
     
     return (
         <Card className={"py-3 shadow-lg"}>
-            <CardContent className={"px-3"}>
+            <CardContent className={"px-3 flex-grow"}>
                 <div className={"aspect-video overflow-hidden rounded-md"}>
                     <img
                         src={item?.image}
@@ -71,14 +71,15 @@ export function BlogCards({item}) {
                     </div>
                 </div>
             </CardFooter>
-        </Card>)
+        </Card>
+    )
 }
 
 
 // display blog cards
 export function DisplayBlogCards({items = []}) {
     return (
-        <div className={"w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"}>
+        <div className={"w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"}>
             {
                 items.map((item, index) => (
                     <BlogCards item={item} key={index}/>
