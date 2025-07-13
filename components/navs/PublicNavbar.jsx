@@ -29,6 +29,7 @@ export function AvatarInfo ({user, setIsMobileMenuOpen = null, logout}) {
     
     return (
         <DisplayDropdown
+            className={"z-[10001]"}
             trigger={
                 <button type={"button"} className={"cursor-pointer"}>
                     <DisplayAvatar userData={user} />
@@ -101,7 +102,7 @@ export function PublicNavbar() {
 
 
     return (
-        <div className="fixed w-full">
+        <div className="fixed w-full z-[10000]">
             <Navbar>
                 {/* Desktop Navigation */}
                 <NavBody>
