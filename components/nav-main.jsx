@@ -1,7 +1,7 @@
 "use client"
 
 import {
-    LayoutDashboard, List, Newspaper, Tags
+    LayoutDashboard, List, Newspaper, Tags, Users
 } from "lucide-react"
 
 import {
@@ -33,9 +33,14 @@ export const navItems = [
     },
     {
         title: "Blogs",
-        slug: "Handle blogs",
+        slug: "Manage blogs",
         url: "/dashboard/blogs",
         icon: Newspaper,
+    },{
+        title: "Users",
+        slug: "Manage users",
+        url: "/dashboard/users",
+        icon: Users,
     },
 ]
 

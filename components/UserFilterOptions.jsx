@@ -1,80 +1,46 @@
 "use client"
 
 import {usePathname, useRouter} from "next/navigation";
-import {Input} from "@/components/ui/input";
-import {useState} from "react";
-import {Button, buttonVariants} from "@/components/ui/button";
-import { SearchIcon, XIcon} from "lucide-react";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import useUpdateSearchParams from "@/hooks/useUpdateSearchParams";
-import infoStore from "@/stores/infoStore";
-import Link from "next/link";
+import {useState} from "react";
 import {infoToast} from "@/helpers/toasts/toastNofifications";
+import {Input} from "@/components/ui/input";
+import {Button, buttonVariants} from "@/components/ui/button";
+import {SearchIcon, XIcon} from "lucide-react";
+import Link from "next/link";
+import {SelectItem} from "@/components/ui/select";
+import {FilterSelectBox} from "@/components/BlogFilterOptions";
 
-
-// filter option select box
-export function FilterSelectBox({
-    onChange,
-    name,
-    placeholder = "Select Something",
-    value,
-    children,
-}) {
-    
-    return (
-        <div>
-            <p className={"pb-2 capitalize text-sm font-medium"}>{name}</p>
-            <Select
-                value={value}
-                onValueChange={(e) => {
-                    onChange(name, e)
-                }}
-            >
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder={placeholder} />
-                </SelectTrigger>
-                
-                <SelectContent>
-                    {children}
-                </SelectContent>
-            </Select>
-        </div>
-    );
-}
-
-
-// blog filter options
-export default function BlogFilterOptions() {
+export default function UserFilterOptions() {
     
     const pathname = usePathname()
-    const isDashboard = pathname.includes("/dashboard/blogs")
+    const isDashboard = pathname.includes("/dashboard/users")
     const router = useRouter()
+    
     const {
         updateParams,
         params:{
+            page = "1",
             limit = "20",
-            sort = "all",
-            category = "all",
-            tag = "all",
-            published="all",
+            role = "all",
+            gender = "all",
+            verified = "all",
+            approved = "all",
             blocked = "all",
             search = ""
         }
     } = useUpdateSearchParams()
-    // console.log(limit, sort, category, tag)
     
-    const {category: categoryList, tags} = infoStore()
     const [searchValue, setSearchValue] = useState(() => {
-        if(search?.trim().length >= 10) return search
+        if(search?.trim().length >= 5) return search
         return ""
     })
     
     // handle updating params
     const handleUpdateParams = (name, value) => {
-        if(searchValue?.trim().length >= 10) return infoToast("Please clear the search field to apply other sorting factors")
+        if(searchValue?.trim().length >= 5) return infoToast("Please clear the search field to apply other sorting factors")
         updateParams(name, value)
     }
-    
     
     return (
         <div className={"pb-10"}>
@@ -85,7 +51,7 @@ export default function BlogFilterOptions() {
                         type={"text"}
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
-                        placeholder={"search blogs by name"}
+                        placeholder={"search users by name"}
                     />
                 </div>
                 
@@ -96,12 +62,11 @@ export default function BlogFilterOptions() {
                         title={"Search something"}
                         onClick={() => {
                             const searchTerm = searchValue.trim()
-                            if(searchTerm.length < 10) return infoToast("Please put at least 10 characters!")
-                            if(isDashboard){
-                                return router.push(`/dashboard/blogs?search=${encodeURIComponent(searchValue)}`)
+                            if (searchTerm.length < 5) return infoToast("Please put at least 5 characters!")
+                            if (isDashboard) {
+                                return router.push(`/dashboard/users?search=${encodeURIComponent(searchValue)}`)
                                 
                             }
-                            // go to a search page for public
                         }}
                     >
                         <SearchIcon/>
@@ -110,8 +75,7 @@ export default function BlogFilterOptions() {
                     {/*reset button*/}
                     <Link
                         href={{
-                            pathname: "/dashboard/blogs",
-                            query: {}
+                            pathname: "/dashboard/users", query: {}
                         }}
                         title={"Reset all filters"}
                         onClick={() => {
@@ -138,59 +102,54 @@ export default function BlogFilterOptions() {
                     <SelectItem value={"60"}>60</SelectItem>
                 </FilterSelectBox>
                 
-                {/*category select*/}
+                {/*gender*/}
                 <FilterSelectBox
                     onChange={handleUpdateParams}
-                    name={"category"}
-                    placeholder={"Select category"}
-                    value={category}
+                    name={"gender"}
+                    placeholder={"Select gender"}
+                    value={gender}
                 >
                     <SelectItem value={"all"}>ALL</SelectItem>
-                    {
-                        categoryList.map((item, index) => (
-                            <SelectItem value={item?._id} key={index}>{item?.name}</SelectItem>
-                        ))
-                    }
+                    <SelectItem value={"male"}>MALE</SelectItem>
+                    <SelectItem value={"female"}>FEMALE</SelectItem>
+                    <SelectItem value={"others"}>OTHERS</SelectItem>
                 </FilterSelectBox>
                 
-                {/*tags select*/}
+                {/*user roles*/}
                 <FilterSelectBox
                     onChange={handleUpdateParams}
-                    name={"tag"}
-                    placeholder={"Select tag"}
-                    value={tag}
+                    name={"role"}
+                    placeholder={"Select user role"}
+                    value={role}
                 >
                     <SelectItem value={"all"}>ALL</SelectItem>
-                    {
-                        tags.map((item, index) => (
-                            <SelectItem value={item?._id} key={index}>#{item?.name}</SelectItem>
-                        ))
-                    }
+                    <SelectItem value={"admin"}>Admins</SelectItem>
+                    <SelectItem value={"moderators"}>Moderators</SelectItem>
+                    <SelectItem value={"users"}>Users</SelectItem>
                 </FilterSelectBox>
                 
-                {/*sort options*/}
+                {/*verified options*/}
                 <FilterSelectBox
                     onChange={handleUpdateParams}
-                    name={"sort"}
-                    placeholder={"Select Sort"}
-                    value={sort}
+                    name={"verified"}
+                    placeholder={"Select verified"}
+                    value={verified}
                 >
                     <SelectItem value={"all"}>ALL</SelectItem>
-                    <SelectItem value={"recent"}>Recent</SelectItem>
-                    <SelectItem value={"popular"}>Most popular</SelectItem>
-                    <SelectItem value={"featured"}>Featured</SelectItem>
+                    <SelectItem value={"true"}>Verified</SelectItem>
+                    <SelectItem value={"false"}>Not Verified</SelectItem>
                 </FilterSelectBox>
                 
-                {/*published options*/}
+                {/*approved options*/}
                 <FilterSelectBox
                     onChange={handleUpdateParams}
-                    name={"published"}
-                    placeholder={"Select published options"}
-                    value={published}
+                    name={"approved"}
+                    placeholder={"Select approved"}
+                    value={approved}
                 >
                     <SelectItem value={"all"}>ALL</SelectItem>
-                    <SelectItem value={"yes"}>Published</SelectItem>
-                    <SelectItem value={"no"}>Not Published</SelectItem>
+                    <SelectItem value={"true"}>Approved</SelectItem>
+                    <SelectItem value={"false"}>Not Approved</SelectItem>
                 </FilterSelectBox>
                 
                 {/*block options*/}
@@ -201,10 +160,10 @@ export default function BlogFilterOptions() {
                     value={blocked}
                 >
                     <SelectItem value={"all"}>ALL</SelectItem>
-                    <SelectItem value={"yes"}>Blocked</SelectItem>
-                    <SelectItem value={"no"}>Not Blocked</SelectItem>
+                    <SelectItem value={"true"}>Blocked</SelectItem>
+                    <SelectItem value={"false"}>Not Blocked</SelectItem>
                 </FilterSelectBox>
             </div>
         </div>
-    );
+    )
 }
