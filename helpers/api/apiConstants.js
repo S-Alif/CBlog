@@ -20,7 +20,8 @@ const routes = {
 	user: {
 		update: `/api/${version}/user`,
 		profile: `/api/${version}/user/profile`,
-		blogs: `/api/${version}/user/blogs`
+		blogs: `/api/${version}/user/blogs`,
+		get: `/api/${version}/user`,
 	},
 	blog: {
 		admin: `/api/${version}/blog/admin`,

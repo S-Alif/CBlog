@@ -44,6 +44,7 @@ const apiHandler = async (
     catch (error) {
         console.error('API request failed:', error)
         const message = error?.response?.data?.message
+        console.error(message)
         if (showErrorToast) {
             // show the toast notification with the error message
             if(message) {
