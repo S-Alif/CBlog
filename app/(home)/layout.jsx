@@ -1,5 +1,5 @@
 import { Merriweather, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 const merriweatherFont = Merriweather({
 	variable: "--font-merriweather-sans",
