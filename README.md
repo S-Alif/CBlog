@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CBlog
 
-## Getting Started
+A blog platform for CSE students, built with **Next.js**, **shadcn/ui**, **TailwindCSS** and **MongoDB**.  
+The platform allows students to write articles, share them with peers and maintain a controlled student-only environment.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+- **Frontend**: Next.js (App Router), shadcn/ui, TailwindCSS
+- **Backend**: Next.js API routes
+- **Database**: MongoDB (Atlas)
+- **Auth**: NextAuth.js (JWT/session-based)
+- **Storage**: LocalStorage (for bookmarks, MVP)
+- **Sharing**: Open Graph meta tags, QR codes
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Roles
+- **Admin (max 2)**
+  - Full access: manage moderators, site-wide settings, analytics
+- **Moderator (max 10)**
+  - Approve/reject account requests
+  - Review flagged content
+  - Approve first-time posts from new users
+- **User (students)**
+  - Request account
+  - Write & publish articles (after approval)
+  - Bookmark (localStorage MVP), like, comment (optional)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Account Flow
+1. Student fills out **account request form** (name, roll number, email, batch).
+2. Request stored in `Requests` collection with `status = pending`.
+3. Moderator/Admin reviews request:
+   - Approve → create account in `Users` collection + send email with login details.
+   - Reject → mark rejected, notify student.
+4. User logs in → always lands on `/profile`.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Writing & Publishing
+- **Editor**: TipTap (HTML + JSON storage)
+- New users → first articles go into moderator review.
+- Trusted users → articles auto-publish.
+- Articles organized by **categories** and **tags**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Searching & Organization
+- **Categories**: fixed set (Career, Research, Tutorials, Events, Fun, etc.)
+- **Tags**: free-form, user-defined
+- **Search**: MongoDB text index on `title`, `summary`, and `bodyText`
+- Filters: by tag, category, author, date
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Views & Leaderboards
+- View counting:
+  - Basic MVP: increment counter on load (dedupe with localStorage)
+  - Future: Redis for unique views/session-based tracking
+- Leaderboards:
+  - Trending articles (7 days)
+  - Top authors (total views across articles)
+
+---
+
+## Bookmarks
+- **MVP**: LocalStorage (`bookmarks[]`)
+- **Future**: Sync to server for cross-device support
+
+---
+
+## Sharing
+- **Open Graph meta tags** for articles → rich previews on social media
+- **QR Codes** for:
+  - Each article
+  - Each user profile
+- Implemented via client-side QR generator (`qrcode.react`)
+
