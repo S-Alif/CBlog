@@ -48,14 +48,14 @@ const AuthPagesWrapper = ({
 }) => {
     return (
         <section className={"w-full min-h-screen flex items-center justify-center px-3"}>
-            <Card className="p-0 max-w-sm w-full shadow-none border-none z-10">
+            <Card className="p-0 max-w-lg w-full shadow-none border z-10">
                 <CardHeader className="border-b border-border p-4 [.border-b]:pb-4">
                     <CardTitle>{title}</CardTitle>
                     <CardDescription>
                         {description}
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="px-4">
                     {children}
                 </CardContent>
                 <CardFooter className="p-4 border-t border-border [.border-t]:pt-4 flex items-center justify-center">

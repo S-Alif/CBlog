@@ -1,4 +1,5 @@
 import AuthPagesWrapper from "@/components/auth-pages-wrapper"
+import SignUpForm from "@/components/forms/auth/sign-up-form"
 
 // metadata
 export const metadata = {
@@ -11,12 +12,11 @@ const SignUpPage = () => {
     return (
         <AuthPagesWrapper
             title={"Sign up"}
-            description={"Enter your credentials for a registration request"}
+            description={"Enter your credentials for a sign-up request"}
             footerBtnText={"Back to log in"}
             footerBtnLink={"/auth/login"}
         >
-
-
+            <SignUpForm />
         </AuthPagesWrapper>
     )
 }

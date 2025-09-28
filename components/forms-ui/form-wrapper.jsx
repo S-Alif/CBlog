@@ -32,34 +32,65 @@
 
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { useTransition } from "react";
 
 
 
-export default function FormWrapper({
+// custom button for form wrapper
+const FormButton = ({submitBtnText, form}) => {
+
+    return (
+        <Button
+            type="submit"
+            size={"lg"}
+            disabled={form.formState.isSubmitting}
+            className={"flex-grow"}
+        >
+            {submitBtnText} {form.formState.isSubmitting && <span className="w-5 h-5 border-3 border-t-transparent border-gray-100 rounded-full animate-spin"></span>}
+        </Button>
+    )
+}
+
+
+// form wrapper
+const FormWrapper = ({
     form,
     defaultValues,
-    onSubmit,
+    action,
+    onSuccess=(res) => {},
+    onError=(res) => {}, 
     resetFormBtn = false,
     submitBtnText = "Save",
     loading = false,
     children
-}) {
+}) => {
+
+    // console.log("Form state:", form.formState.isSubmitting)
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                {children}
+            <form onSubmit={form.handleSubmit(async (values) => {
+                const response = await action(values)
+                console.log(response)
+
+                if (response?.error) {
+                    // toast.error(response.error)
+                    onError?.(response)
+                } else {
+                    // toast.success(successMessage)
+                    onSuccess?.(response)
+                }
+            })}>
+                
+                <fieldset disabled={form.formState.isSubmitting}>
+                    {children}
+                </fieldset>
 
                 {/*form buttons*/}
-                <div className={"flex gap-4"}>
-                    <Button
-                        type="submit"
-                        size={"lg"}
-                        disabled={loading}
-                        className={"flex-grow"}
-                    >
-                        {submitBtnText} {loading && <span className="w-5 h-5 border-3 border-t-transparent border-gray-100 rounded-full animate-spin"></span>}
-                    </Button>
+                <div className={"flex gap-4 pt-4"}>
+
+                    <FormButton submitBtnText={submitBtnText} form={form} />
+
                     {resetFormBtn &&
                         <Button
                             type="button"
@@ -79,3 +110,5 @@ export default function FormWrapper({
         </Form>
     )
 }
+
+export default FormWrapper
